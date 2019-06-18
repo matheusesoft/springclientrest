@@ -3,12 +3,17 @@
 ### Como usar os serviços
 Para usar o serviço será utilizado comandos Curl, pode ser utilizado o console git para executar (Git Bash, https://git-scm.com). Porém, caso necessário, é possível utilizar algum programa instalado no ambiente como Postman(https://www.getpostman.com/products) ou o Curl para windowns (https://curl.haxx.se/windows).
 ###### Comandos curl:
-- **Criar cliente:** curl -X POST -H "Content-Type: application/json" -d '{"nome":"Matheus Oliveira", "idade" : 23 }' "http://localhost:8080/cliente"
-- **Atualizar cliente:** curl -X PUT -H "Content-Type: application/json" -d '{"id" : 30, "nome":"Matheus Souza", "idade" : 24 }' "http://localhost:8080/cliente"
-- **Buscar cliente:** curl -X GET -H "Content-Type: application/json" "http://localhost:8080/cliente/substituirPeloID"
-- **Listar todos os clientes:** curl -X GET -H "Content-Type: application/json" "http://localhost:8080/cliente/listar"
-- **Apagar cliente:** curl -X DELETE -H "Content-Type: application/json" "http://localhost:8080/cliente/substiruirPeloID"
-
+- **Criar cliente:** 
+		curl -X POST -H "Content-Type: application/json" -d '{"nome":"Matheus Oliveira", "idade" : 23 }' "http://localhost:8080/cliente"
+- **Atualizar cliente:** 
+		curl -X PUT -H "Content-Type: application/json" -d '{"id" : substiruirPeloID, "nome":"Matheus Souza", "idade" : 24 }' "http://localhost:8080/cliente"
+- **Buscar cliente:** 
+		curl -X GET -H "Content-Type: application/json" "http://localhost:8080/cliente/substituirPeloID"
+- **Listar todos os clientes:** 
+		curl -X GET -H "Content-Type: application/json" "http://localhost:8080/cliente/listar"
+- **Apagar cliente:** 
+		curl -X DELETE -H "Content-Type: application/json" "http://localhost:8080/cliente/substiruirPeloID"
+**OBS:** Substitur **"substiruirPeloID"** dos comandos pelo **id** do cliente.
 ### Quais ferramentas foram usadas (e porque essas foram as escolhidas)
 - Eclipse IDE Java EE 4.11.0 (https://www.eclipse.org/downloads)
 		Porque: A ferramenta foi utilizada pela experiência com a plataforma para agilizar o desenvolvimento.
