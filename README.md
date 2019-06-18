@@ -45,7 +45,7 @@ Para usar o serviço será utilizado comandos Curl, pode ser utilizado o console
 		mvn clean install
 - É possível executar o projeto após o comando anterior navengando até a pastar target do projeto e executar o comando:
 		java -jar clientrest-0.0.1.jar
-- Executar projeto:
+- ou Executar o projeto sem necessidade de gerar o arquivo jar com o comando mvn clean install:
 		mvn spring-boot:run
 7. Utilizar serviço conforme seção **Como usar os serviços**.
 ### Instruções para como montar o ambiente de produção onde seus serviços devem ser executados
