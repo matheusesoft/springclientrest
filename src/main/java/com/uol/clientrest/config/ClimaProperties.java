@@ -1,4 +1,4 @@
-package com.uol.clientrest.properties;
+package com.uol.clientrest.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

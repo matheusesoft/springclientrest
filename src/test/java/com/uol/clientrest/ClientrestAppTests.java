@@ -26,20 +26,16 @@ import com.uol.clientrest.persistence.model.Cliente;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ClientrestApplicationTests {
+public class ClientrestAppTests {
 
 	@LocalServerPort
 	private int port;
-	
 	@Autowired
 	private RestTemplate restTemplate;
-	
 	@MockBean
 	private HttpServletRequest request;
-	
 	@MockBean
 	private ClienteController clienteController;
-
 	Cliente cliente;
 	List<Cliente> clientes;
 
@@ -51,11 +47,20 @@ public class ClientrestApplicationTests {
 		clientes.add(new Cliente(3, "Emanuel Oliveira", 24));
 		cliente = clientes.get(0);
 	}
+	
+	@Test
+	public void listaClientes() {
+		when(clienteController.buscarClientes()).thenReturn(clientes);
+		ResponseEntity<Cliente[]> response = restTemplate.getForEntity(retornaURLPort("/cliente/listar"), Cliente[].class);
+		Cliente[] responseClientes = response.getBody();
+		List<Cliente> expected = clientes;
+		assertThat(responseClientes.length).isEqualTo(expected.size());
+	}
 
 	@Test
-	public void retornaCliente() {
+	public void buscaCliente() {
 		when(clienteController.buscarClientePorId(cliente.getId())).thenReturn(cliente);
-		Cliente response = restTemplate.getForObject(createURLWithPort("/cliente/1"), Cliente.class);
+		Cliente response = restTemplate.getForObject(retornaURLPort("/cliente/1"), Cliente.class);
 		Cliente expected = new Cliente(1, "Matheus Oliveira", 23);
 		assertThat(response.getId()).isEqualTo(expected.getId());
 		assertThat(response.getNome()).isEqualTo(expected.getNome());
@@ -63,23 +68,14 @@ public class ClientrestApplicationTests {
 	}
 	
 	@Test
-	public void retornaClientes() {
-		when(clienteController.buscarClientes()).thenReturn(clientes);
-		ResponseEntity<Cliente[]> response = restTemplate.getForEntity(createURLWithPort("/cliente/listar"), Cliente[].class);
-		Cliente[] responseClientes = response.getBody();
-		List<Cliente> expected = clientes;
-		assertThat(responseClientes.length).isEqualTo(expected.size());
-	}
-	
-	@Test
 	public void deletarCliente() {
 		when(clienteController.deletarClientePorId(cliente.getId())).thenReturn("sucess");
-		ResponseEntity<String> responseDelete = restTemplate.exchange(createURLWithPort("/cliente/" + cliente.getId()), HttpMethod.DELETE, null, String.class);
+		ResponseEntity<String> responseDelete = restTemplate.exchange(retornaURLPort("/cliente/" + cliente.getId()), HttpMethod.DELETE, null, String.class);
 		String response = responseDelete.getBody();
 		assertThat(response).isEqualTo("sucess");
 	}
 	
-	private String createURLWithPort(String uri) {
+	private String retornaURLPort(String uri) {
 		return "http://localhost:" + port + uri;
 	}
 

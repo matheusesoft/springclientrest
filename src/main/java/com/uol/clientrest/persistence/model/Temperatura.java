@@ -30,8 +30,7 @@ public class Temperatura {
 		this.idCliente = temperaturaDAO.getClienteId();
 		this.ipRequisicao = temperaturaDAO.getIpRequest();
 	}
-
-		
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

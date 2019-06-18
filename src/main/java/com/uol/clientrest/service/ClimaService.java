@@ -1,4 +1,4 @@
-package com.uol.clientrest.webservice;
+package com.uol.clientrest.service;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -11,41 +11,32 @@ import org.springframework.web.client.RestTemplate;
 import com.uol.clientrest.presistence.dao.CidadesDAO;
 import com.uol.clientrest.presistence.dao.IPVigilanteDAO;
 import com.uol.clientrest.presistence.dao.ClimaDAO;
-import com.uol.clientrest.properties.ClimaProperties;
-import com.uol.clientrest.properties.IPVigilanteProperties;
+import com.uol.clientrest.config.ClimaProperties;
+import com.uol.clientrest.config.IPVigilanteProperties;
 import com.uol.clientrest.persistence.model.Temperatura;
 import com.uol.clientrest.persistence.repository.TemperaturaRepo;
 
 @Service
 public class ClimaService {
-
 	@Autowired
-	private TemperaturaRepo repository;
-
+	private TemperaturaRepo temperaturaRepo;
 	@Autowired
 	private ClimaProperties climaProperties;
-
 	@Autowired
 	private RestTemplate restTemplate;
-	
 	@Autowired
-	private IPVigilanteProperties ipvigilanteProperties;
+	private IPVigilanteProperties ipvigilante;
 
 	public Temperatura salvar(Temperatura temperatura) {
-
-		IPVigilanteDAO ipvigilante = localizaLatitudeLongitude(temperatura.getIpRequisicao());
-
+		IPVigilanteDAO ipvigilante = localizaLatLong(temperatura.getIpRequisicao());
 		Calendar dataHoje = Calendar.getInstance();
 		localizaTemperatura(temperatura, ipvigilante.getData().getLatitude(), ipvigilante.getData().getLongitude(), dataHoje);
-
-		return repository.save(temperatura);
+		return temperaturaRepo.save(temperatura);
 	}
 
 	private void localizaTemperatura(Temperatura temperatura, String latitude, String longitude, Calendar data) {
 		CidadesDAO[] listaCidades = listaCidades(latitude, longitude);
-
 		Integer idCidade = listaCidades[0].getWoeid();
-		
 		localizaTemperaturaMinimaMaxima(data, idCidade, temperatura);
 	}
 
@@ -55,12 +46,12 @@ public class ClimaService {
 		int dia = data.get(Calendar.DAY_OF_MONTH);
 
 		String urlTemperatura = climaProperties.getUrlTemperaturaPorCidadeId();
-		ResponseEntity<ClimaDAO[]> responseEntityTemperaturaDAO = restTemplate.getForEntity(urlTemperatura, ClimaDAO[].class, idCidade, ano, mes, dia);
+		ResponseEntity<ClimaDAO[]> responseTemperaturaDAO = restTemplate.getForEntity(urlTemperatura, ClimaDAO[].class, idCidade, ano, mes, dia);
 
 		BigDecimal temperaturaMin = new BigDecimal(Float.MAX_VALUE);
 		BigDecimal temperaturaMax = new BigDecimal(Float.MIN_VALUE);
 
-		for (ClimaDAO climaDAO : responseEntityTemperaturaDAO.getBody()) {
+		for (ClimaDAO climaDAO : responseTemperaturaDAO.getBody()) {
 			if (climaDAO.getApplicableDate() == null) {
 				continue;
 			}
@@ -89,8 +80,8 @@ public class ClimaService {
 		return listaCidades;
 	}
 
-	private IPVigilanteDAO localizaLatitudeLongitude(String ipOrigem) {
-		String url = ipvigilanteProperties.getUrlIPVigilante();
+	private IPVigilanteDAO localizaLatLong(String ipOrigem) {
+		String url = ipvigilante.getUrlIPVigilante();
 		if (ipOrigem.equals("127.0.0.1") || ipOrigem.equals("0:0:0:0:0:0:0:1")) {
 			ipOrigem = identificaIp();
 		}
@@ -98,7 +89,7 @@ public class ClimaService {
 	}
 	
 	private String identificaIp() {
-		String url = ipvigilanteProperties.getUrlIpv4();
+		String url = ipvigilante.getUrlIpv4();
 		return restTemplate.getForObject(url, IPVigilanteDAO.class).getData().getIpv4();
 	}
 	

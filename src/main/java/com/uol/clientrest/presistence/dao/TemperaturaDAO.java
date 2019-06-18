@@ -5,11 +5,8 @@ import java.io.Serializable;
 import com.uol.clientrest.persistence.model.Temperatura;;
 
 public class TemperaturaDAO implements Serializable {
-
 	private static final long serialVersionUID = 5192670014351997454L;
-
 	private long idCliente;
-
 	private String ipRequisicao;
 
 	public TemperaturaDAO() {

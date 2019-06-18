@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.uol.clientrest.presistence.dao.TemperaturaDAO;
 import com.uol.clientrest.persistence.model.Temperatura;
-import com.uol.clientrest.webservice.ClimaService;;
+import com.uol.clientrest.service.ClimaService;;
 
 @Service
 public class ClimaListener implements MessageListener {
@@ -25,12 +25,9 @@ public class ClimaListener implements MessageListener {
 
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
-		
 		TemperaturaDAO temperaturaDAO = convertByteToTemperaturaDAO(message);
 		LOGGER.info("Received <" + temperaturaDAO + ">");
-		
 		Temperatura temperatura = new Temperatura(temperaturaDAO);
-		
 		temperatura = climaService.salvar(temperatura);
 		LOGGER.info("Saved <" + temperatura + ">");
 	}

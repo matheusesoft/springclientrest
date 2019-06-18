@@ -20,18 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
-
 import com.uol.clientrest.persistence.model.Cliente;
-import com.uol.clientrest.webservice.ClienteService;
-
+import com.uol.clientrest.service.ClienteService;
 
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
-
 	@Autowired
 	private ClienteService service;
-
+	
 	@GetMapping("/listar")
 	public List<Cliente> buscarClientes() {
 		return service.buscarClientes();
