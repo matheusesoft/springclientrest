@@ -13,7 +13,10 @@ Para usar o serviço será utilizado comandos Curl, pode ser utilizado o console
 		curl -X GET -H "Content-Type: application/json" "http://localhost:8080/cliente/listar"
 - **Apagar cliente:** 
 		curl -X DELETE -H "Content-Type: application/json" "http://localhost:8080/cliente/substiruirPeloID"
+
 **OBS:** Substitur **"substiruirPeloID"** dos comandos pelo **id** do cliente.
+
+É possível também verificar os dados inseridos através do banco pelo link http://localhost:8080/h2. O usuário padrão é "uol" e a senha "123", mas podem ser modificados no arquivo src/main/resources/application.properties.
 ### Quais ferramentas foram usadas (e porque essas foram as escolhidas)
 - Eclipse IDE Java EE 4.11.0 (https://www.eclipse.org/downloads)
 		Porque: A ferramenta foi utilizada pela experiência com a plataforma para agilizar o desenvolvimento.
@@ -47,5 +50,6 @@ Para usar o serviço será utilizado comandos Curl, pode ser utilizado o console
 7. Utilizar serviço conforme seção **Como usar os serviços**.
 ### Instruções para como montar o ambiente de produção onde seus serviços devem ser executados
 1. JDK 8 deve estar instalado na máquina que o serviço irá rodar.
-2. Redis deve estar rodando (redis-server.exe) .
-3. Executar aplicação conforme na seção **Como executar, testar, empacotar e entregar o projeto**.
+2. Redis deve estar rodando (redis-server.exe).
+3. Modificar arquivo src/main/resources/application.properties caso necessário mudar o banco de dados, porta ou ip local.
+4. Executar aplicação conforme na seção **Como executar, testar, empacotar e entregar o projeto**.
