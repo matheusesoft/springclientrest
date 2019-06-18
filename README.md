@@ -40,7 +40,7 @@ Para usar o serviço será utilizado comandos Curl, pode ser utilizado o console
 3. Baixar e instalar o Redis.
 4. Iniciar o Redis, navegar através do Prompt até a pasta de instalação do Redis e exceutar o redis-server.exe.
 5. Clonar o repositório: 
-		git clone https://github.com/matheusesoft/springclientrest
+		git clone https://github.com/matheusesoft/springclientrest.git
 6. Empacotar projeto e executar. 
 		mvn clean install
 - É possível executar o projeto após o comando anterior navengando até a pastar target do projeto e executar o comando:
