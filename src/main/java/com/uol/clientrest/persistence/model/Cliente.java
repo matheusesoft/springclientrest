@@ -37,7 +37,6 @@ public class Cliente implements Serializable {
 		if (idade != null) {
 			builder.append("idade=");
 			builder.append(idade);
-			builder.append(", ");
 		}
 		builder.append("]");
 		return builder.toString();

@@ -9,14 +9,13 @@ import org.springframework.stereotype.Service;
 import com.uol.clientrest.persistence.model.*;
 import com.uol.clientrest.persistence.repository.ClienteRepo;
 import com.uol.clientrest.presistence.dao.TemperaturaDAO;
-import com.uol.clientrest.publisher.TemperaturaPublisher;
 
 @Service
 public class ClienteService {
 	@Autowired
 	private ClienteRepo clienteRepo;
 	@Autowired
-	private TemperaturaPublisher temperaturaPublisher;
+	private ClimaService climaService;
 	
 	public Cliente salvar(Cliente cliente) {
 		return clienteRepo.save(cliente);
@@ -27,7 +26,8 @@ public class ClienteService {
 		Temperatura temperatura = new Temperatura();
 		temperatura.setIdCliente(resultCliente.getId());
 		TemperaturaDAO temperaturaDAO = new TemperaturaDAO(temperatura, request.getRemoteAddr());
-		temperaturaPublisher.publish(temperaturaDAO);
+		temperatura = new Temperatura(temperaturaDAO);
+		climaService.salvar(temperatura);
 		return resultCliente;
 	}
 	

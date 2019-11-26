@@ -26,6 +26,7 @@ import com.uol.clientrest.service.ClienteService;
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
+	
 	@Autowired
 	private ClienteService service;
 	
@@ -35,7 +36,6 @@ public class ClienteController {
 	}
 	
 	@GetMapping(value = "/{id}")
-	@Cacheable(value = "cliente", key = "#id")
 	public Cliente buscarClientePorId(@PathVariable("id") long id) {
 		return service.buscarClientePorId(id);
 	}
@@ -46,13 +46,11 @@ public class ClienteController {
 	}
 
 	@PutMapping
-	@CachePut(value = "cliente", key = "#cliente.id")
 	public Cliente atualizar(@RequestBody Cliente cliente) {
 		return service.atualizar(cliente);
 	}
 
 	@DeleteMapping("/{id}")
-	@CacheEvict(value = "cliente", key = "#id")
 	public String deletarClientePorId(@PathVariable("id") long id) {
 		service.deletarClientePorId(id);
 		return "sucess";
